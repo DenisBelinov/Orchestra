@@ -84,7 +84,7 @@ void copyInstumentArray(Instrument *& dest, const Instrument* source, int size)
 		dest = nullptr;
 		return;
 	}
-	if(!dest)
+	if (!dest)
 		delete[] dest;
 	dest = new Instrument[size];
 	for (size_t i = 0; i < size; i++)
@@ -107,7 +107,7 @@ class Orchestra
 	int instrumentCount; //not implemented in the class funtionality
 public:
 	int difInstrumentCount; // should be called m_arraySize, didnt have the energy to change it :(
-	//cosntructors
+							//cosntructors
 	Orchestra() : m_members(nullptr), instrumentCount(0), difInstrumentCount(0)
 	{
 		setName("");
@@ -116,11 +116,11 @@ public:
 	Orchestra(const char* name);
 	Orchestra(const Orchestra& other);
 	//functions
-		//setters/getters
+	//setters/getters
 	void setName(const char* name);
 	const char* getName() const;
 	const Instrument* getMembers() const;
-		//other
+	//other
 	int getSpecificInstrumentCount(const char*) const;
 	int getInstrumentCount() const;
 	void print(std::ostream& os = std::cout) const;
@@ -152,7 +152,7 @@ Orchestra::Orchestra(const Orchestra& other) : m_name(nullptr), difInstrumentCou
 	instrumentCount = getInstrumentCount();
 }
 //functions
-	//setters/getters
+//setters/getters
 void Orchestra::setName(const char* name)
 {
 	if (!name)
@@ -161,7 +161,7 @@ void Orchestra::setName(const char* name)
 		//m_name = nullptr;
 		return;
 	}
-	if(!m_name)
+	if (!m_name)
 		delete[] m_name;
 	m_name = new char[strlen(name) + 1];
 	strcpy(m_name, name);
@@ -174,7 +174,7 @@ const Instrument* Orchestra::getMembers() const
 {
 	return m_members;
 }
-	//other
+//other
 int Orchestra::getSpecificInstrumentCount(const char* name) const
 {
 	for (size_t i = 0; i < difInstrumentCount; i++)
@@ -217,7 +217,7 @@ Orchestra& Orchestra::operator+=(const Instrument& ints)
 {
 	for (size_t i = 0; i < difInstrumentCount; i++)
 	{
-		if (!strcmp((m_members + i)->getName(),ints.getName()))
+		if (!strcmp((m_members + i)->getName(), ints.getName()))
 		{
 			if (instrumentCount + ints.getCount() > 40)
 			{
@@ -243,23 +243,24 @@ Orchestra& Orchestra::operator+=(const Instrument& ints)
 Orchestra::~Orchestra()
 {
 	delete[] m_name;
-	//delete[] m_members;
+	if(!m_members)
+		delete[] m_members;
 }
 
 int main()
 {
 	Instrument instr[3] = { ("fleita"), ("kitara"), ("cigulka") };
-	
+
 	Orchestra or1("Orkestyr1", instr, 3);
 	Orchestra or2;
 	Orchestra or3("Orkestyr2");
 	Orchestra or4(or1);
-	
+
 	//or1.print();
 	//or2.print();
 	//or3.print();
 	//or4.print();
-	
+
 	or2 = or1;
 	or2 += Instrument(100, "fleita");
 	or2.print();
@@ -268,6 +269,6 @@ int main()
 }
 
 
-/*Problems : 
-	The orchestra destructor on delete[] members
+/*Problems :
+The orchestra destructor on delete[] members
 */
